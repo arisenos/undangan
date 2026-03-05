@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kartu Ucapan Pernikahan Anggaran & Anin</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .date-display {
+            font-size: 32px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1s ease-in;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 600px;
+            height: 550px;
+            background: linear-gradient(135deg, #ffe5e9 0%, #f5d7e1 100%);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            animation: cardFlip 0.8s ease-in-out;
+            transform-style: preserve-3d;
+            border: 3px solid #ffb3d9;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.1), transparent 50%);
+            pointer-events: none;
+        }
+
+        .card-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            text-align: center;
+            color: white;
+            z-index: 2;
+        }
+
+        .card-title {
+            font-size: 42px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+            animation: bounce 2s infinite;
+            color: #c06c84;
+        }
+
+        .card-subtitle {
+            font-size: 28px;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+            animation: slideIn 1.2s ease-in-out;
+            color: #c06c84;
+            font-weight: 600;
+        }
+
+        .card-message {
+            font-size: 14px;
+            line-height: 1.8;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 20px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        .card-message::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .card-message::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .card-message::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+        }
+
+        /* Animasi Bunga */
+        .flower {
+            position: fixed;
+            pointer-events: none;
+            font-size: 30px;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes cardFlip {
+            from {
+                transform: rotateY(90deg);
+                opacity: 0;
+            }
+            to {
+                transform: rotateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .emoji-decoration {
+            font-size: 35px;
+            margin: 0 10px;
+            animation: bounce 2s infinite;
+            animation-delay: 0.2s;
+        }
+
+        .event-details {
+            font-size: 13px;
+            color: #c06c84;
+            margin-top: 8px;
+            font-weight: 500;
+            line-height: 1.6;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-calendar {
+            background: linear-gradient(135deg, #ff6b9d, #c06c84);
+            color: white;
+        }
+
+        .btn-calendar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(192, 108, 132, 0.4);
+        }
+
+        .btn-maps {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+        }
+
+        .btn-maps:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        .maps-container {
+            width: 100%;
+            max-width: 600px;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease-in;
+        }
+
+        .maps-container iframe {
+            width: 100%;
+            height: 300px;
+            border: none;
+        }
+
+        .maps-title {
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .date-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 16px;
+            border: 2px solid white;
+            backdrop-filter: blur(10px);
+            margin-top: 20px;
+        }
+
+        .share-section {
+            text-align: center;
+            color: white;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .share-btn {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .share-btn:hover {
+            background: rgba(255, 255, 255, 0.5);
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                height: 450px;
+            }
+
+            .card-title {
+                font-size: 32px;
+            }
+
+            .card-subtitle {
+                font-size: 20px;
+            }
+
+            .date-display {
+                font-size: 24px;
+            }
+
+            .event-details {
+                font-size: 12px;
+            }
+
+            .maps-container iframe {
+                height: 250px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="date-display">
+            <span class="emoji-decoration">💍</span>
+            5 Maret 2026
+            <span class="emoji-decoration">💍</span>
+        </div>
+
+        <div class="card">
+            <div class="card-content">
+                <div class="card-title">💒 SELAMAT MENIKAH 💒</div>
+                <div class="card-subtitle">ANGGARAN & ANIN</div>
+                <div class="date-badge">5 Maret 2026</div>
+                <div class="event-details">
+                    📍 STK | ⏰ 20:00 WIB
+                </div>
+                <div class="action-buttons">
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Pernikahan+Anggaran+%26+Anin&dates=20260305T200000/20260305T230000&details=Pernikahan+Anggaran+dan+Anin+di+STK&location=STK&ctz=Asia/Jakarta" target="_blank" class="btn btn-calendar">📅 Tambah Kalender</a>
+                    <a href="https://www.google.com/maps/search/STK" target="_blank" class="btn btn-maps">🗺️ Lihat Lokasi</a>
+                </div>                <div class="card-message">
+                    <p>Sahabat terkasih Anggaran dan Anin,</p><br>
+                    <p>Alhamdulillah, hari bahagia telah tiba. Pernikahan kalian adalah momen istimewa yang kami tunggu-tunggu. Semoga ikatan suci ini membawa berkah, kebahagiaan, dan cinta yang tak tergoyahkan sepanjang hidup.</p><br>
+                    <p>Terima kasih telah mengundang kami menjadi bagian dari hari spesial ini. Semoga perjalanan baru kalian dipenuhi dengan tawa, saling mendukung, dan kenangan indah yang akan dikenang selamanya.</p><br>
+                    <p>Semoga Allah selalu memberkahi rumah tangga kalian dengan kepedulian, kasih sayang, dan kebahagian sejati.</p><br>
+                    <p>Selamat menikah! 🎊❤️</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="maps-container">
+            <div class="maps-title">📍 LOKASI ACARA</div>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.0825652876756!2d106.79799!3d-6.2359!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f3d0d0d0d0d1%3A0x0!2sSTK%20Jakarta!5e0!3m2!1sid!2sid!4v1234567890" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+
+        <div class="share-section">
+            <p>Bagikan dengan teman-teman:</p>
+            <div class="share-buttons">
+                <a href="https://www.facebook.com/sharer/sharer.php" target="_blank" class="share-btn" title="Bagikan di Facebook">f</a>
+                <a href="https://twitter.com/intent/tweet?text=Undangan%20Pernikahan%20Anggaran%20%26%20Anin%20-%205%20Maret%202026" target="_blank" class="share-btn" title="Bagikan di Twitter">𝕏</a>
+                <a href="https://wa.me/?text=Undangan%20Pernikahan%20Anggaran%20%26%20Anin%20-%205%20Maret%202026%20di%20STK" target="_blank" class="share-btn" title="Bagikan di WhatsApp">W</a>
+                <a href="mailto:?subject=Undangan%20Pernikahan%20Anggaran%20%26%20Anin&body=Anda%20diundang%20ke%20pernikahan%20Anggaran%20dan%20Anin%20pada%205%20Maret%202026%20di%20STK%20jam%2020.00%20WIB" class="share-btn" title="Bagikan via Email">✉️</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Array bunga emoji
+        const flowers = ['🌹', '🌺', '🌸', '🌼', '🌻', '💐', '🌷', '🏵️'];
+
+        // Fungsi untuk membuat bunga jatuh
+        function createFlower() {
+            const flower = document.createElement('div');
+            flower.className = 'flower';
+            flower.textContent = flowers[Math.floor(Math.random() * flowers.length)];
+            
+            // Posisi random di bagian atas
+            const startLeft = Math.random() * window.innerWidth;
+            flower.style.left = startLeft + 'px';
+            flower.style.top = '-50px';
+            
+            // Durasi jatuh random antara 3-8 detik
+            const duration = 3 + Math.random() * 5;
+            flower.style.animationDuration = duration + 's';
+            
+            // Delay random
+            const delay = Math.random() * 0.5;
+            flower.style.animationDelay = delay + 's';
+            
+            document.body.appendChild(flower);
+            
+            // Hapus elemen setelah animasi selesai
+            setTimeout(() => {
+                flower.remove();
+            }, (duration + delay) * 1000);
+        }
+
+        // Buat bunga baru setiap 300 ms
+        setInterval(createFlower, 300);
+
+        // Buat beberapa bunga di awal
+        for (let i = 0; i < 5; i++) {
+            setTimeout(createFlower, i * 100);
+        }
+
+        // Update tanggal real-time
+        function updateDate() {
+            const targetDate = new Date('2026-03-05');
+            const today = new Date();
+            const daysLeft = Math.ceil((targetDate - today) / (1000 * 60 * 60 * 24));
+            
+            // Tampilkan countdown jika belum tiba
+            if (daysLeft > 0) {
+                // Uncomment untuk menampilkan countdown
+                // document.querySelector('.date-display').textContent = `${daysLeft} hari lagi menuju 5 Maret 2026`;
+            }
+        }
+
+        updateDate();
+    </script>
+</body>
+</html>
